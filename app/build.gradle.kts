@@ -45,16 +45,20 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    //splash screen api:
+    //splash screen api
     implementation ("androidx.core:core-splashscreen:1.1.0-alpha02")
 
-    //retrofit:
+    //retrofit
     implementation ("com.squareup.retrofit2:retrofit:(2.9.0)")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
     //kotlin coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     //viewmodel lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+    //Glide:
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
 
 }
