@@ -51,4 +51,10 @@ dependencies {
     //retrofit:
     implementation ("com.squareup.retrofit2:retrofit:(2.9.0)")
 
+    //kotlin coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    //viewmodel lifecycle
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
 }
