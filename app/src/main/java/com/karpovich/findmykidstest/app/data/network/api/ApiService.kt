@@ -1,6 +1,7 @@
 package com.karpovich.findmykidstest.app.data.network.api
 
 import com.karpovich.findmykidstest.app.data.network.entities.GitHubItemEntity
+import com.karpovich.findmykidstest.app.data.network.entities.GitHubUserEntity
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,5 +12,7 @@ interface ApiService {
     suspend fun getGitHubUsers(@Query("per_page")perPage:Int): Response<List<GitHubItemEntity>>
 
     @GET("users/{username}")
-    suspend fun getGitHubUser(@Path("username") username: String): Response<GitHubItemEntity>
+    suspend fun getGitHubUser(@Path("username") username: String): Response<GitHubUserEntity>
+    @GET("users/{username}/followers")
+    suspend fun getGitHubFollowers(@Path("username") username: String): Response<List<GitHubItemEntity>>
 }
