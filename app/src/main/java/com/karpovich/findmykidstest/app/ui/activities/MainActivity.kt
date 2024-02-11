@@ -1,5 +1,6 @@
 package com.karpovich.findmykidstest.app.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -48,12 +49,23 @@ class MainActivity : AppCompatActivity() {
             val layoutManager = GridLayoutManager(this@MainActivity, spanCount)
             rvGitHubUsers.layoutManager = layoutManager
             setupClickListener()
+            setupOnEndOfListReachedListener()
         }
     }
     private fun setupClickListener() {
         gitHubItemsAdapter.onGitUserClickListener = {
             Log.d("таг", "setupClickListener: ${it.login}")
+            launchToGitHubUserDetailsActivity(it.login)
         }
+    }
+    private fun setupOnEndOfListReachedListener() {
+        gitHubItemsAdapter.onEndOfListReachedListener = {
+            //вспомнил что пагинация не нужна и обрадовался
+        }
+    }
+    private fun launchToGitHubUserDetailsActivity(login:String) {
+        val intent = GitHubUserDetailsActivity.newIntent(this, login)
+        startActivity(intent)
     }
     private fun setupProgressBar(boolean: Boolean) {
         val progressBar = binding.progressBar

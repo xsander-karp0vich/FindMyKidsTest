@@ -1,12 +1,11 @@
 package com.karpovich.findmykidstest.app.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.karpovich.findmykidstest.R
 import com.karpovich.findmykidstest.app.data.network.entities.GitHubItemEntity
 import com.karpovich.findmykidstest.app.ui.utilities.GitHubItemDiffCallback
@@ -14,6 +13,7 @@ import com.karpovich.findmykidstest.app.ui.utilities.GitHubItemDiffCallback
 class GitHubItemsAdapter : ListAdapter<GitHubItemEntity, GitHubItemViewHolder>(GitHubItemDiffCallback()) {
 
     var onGitUserClickListener: ((GitHubItemEntity) -> Unit)? = null
+    var onEndOfListReachedListener: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitHubItemViewHolder {
         val layout = R.layout.user_item
@@ -34,4 +34,20 @@ class GitHubItemsAdapter : ListAdapter<GitHubItemEntity, GitHubItemViewHolder>(G
         viewHolder.userIconImageView
     }
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    onEndOfListReachedListener?.invoke()
+                }
+            }
+        })
+    }
 }

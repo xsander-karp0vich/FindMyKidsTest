@@ -26,7 +26,7 @@ class MainViewModel: ViewModel() {
         _isGitHubUsersLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response: Response<List<GitHubItemEntity>> = AppRepository.getGitHubUsers(10)
+                val response: Response<List<GitHubItemEntity>> = AppRepository.getGitHubUsers(100)
 
                 if (response.isSuccessful) {
                     val users = response.body()
@@ -41,4 +41,5 @@ class MainViewModel: ViewModel() {
             }
         }
     }
+
 }
