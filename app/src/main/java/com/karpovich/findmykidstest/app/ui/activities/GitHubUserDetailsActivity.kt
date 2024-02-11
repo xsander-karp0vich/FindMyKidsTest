@@ -7,19 +7,33 @@ import android.os.Bundle
 import android.util.Log
 import com.karpovich.findmykidstest.R
 import com.karpovich.findmykidstest.app.data.AppRepository
+import com.karpovich.findmykidstest.databinding.ActivityGitHubUserDetailsBinding
+import com.karpovich.findmykidstest.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GitHubUserDetailsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityGitHubUserDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_git_hub_user_details)
+        binding = ActivityGitHubUserDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        init()
         parseIntent(intent)
+    }
+    private fun init() {
+        setClickListeners()
     }
     private fun parseIntent(intent: Intent) {
         val login = intent.getStringExtra(EXTRA_LOGIN)
         Log.d("инт", "parseIntent: $login")
+    }
+    private fun setClickListeners() {
+        binding.backButtonImageView.setOnClickListener {
+            finish()
+        }
     }
     companion object {
 
