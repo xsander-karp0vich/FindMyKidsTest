@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.karpovich.findmykidstest.R
 import com.karpovich.findmykidstest.app.data.network.entities.GitHubUserEntity
-import com.karpovich.findmykidstest.app.ui.utilities.GitHubItemDiffCallback
+import com.karpovich.findmykidstest.app.ui.utilities.GitHubUserDiffCallback
 
-class GitHubUserAdapter : ListAdapter<GitHubUserEntity, GitHubUserViewHolder>(GitHubItemDiffCallback()) {
+class GitHubUserAdapter : ListAdapter<GitHubUserEntity, GitHubUserViewHolder>(GitHubUserDiffCallback()) {
 
     var onGitUserClickListener: ((GitHubUserEntity) -> Unit)? = null
     var onEndOfListReachedListener: (() -> Unit)? = null
