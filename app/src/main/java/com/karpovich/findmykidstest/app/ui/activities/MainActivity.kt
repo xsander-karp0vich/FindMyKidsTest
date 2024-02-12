@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.karpovich.findmykidstest.app.data.AppRepository
 import com.karpovich.findmykidstest.app.ui.adapters.GitHubUserAdapter
 import com.karpovich.findmykidstest.app.ui.viewmodels.MainViewModel
+import com.karpovich.findmykidstest.app.ui.viewmodels.MainViewModelFactory
 import com.karpovich.findmykidstest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,8 +27,12 @@ class MainActivity : AppCompatActivity() {
     }
     private fun init() {
         setupRecycleView()
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        setupViewModel()
         observeViewModel()
+    }
+    private fun setupViewModel() {
+        val viewModelFactory = MainViewModelFactory(AppRepository)
+        viewModel = ViewModelProvider(this,viewModelFactory)[MainViewModel::class.java]
     }
     private fun observeViewModel() {
         viewModel.isGitHubUsersLoading.observe(this){
