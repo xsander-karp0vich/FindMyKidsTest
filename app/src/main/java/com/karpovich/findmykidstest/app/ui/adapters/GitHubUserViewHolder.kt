@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.karpovich.findmykidstest.R
 
 class GitHubUserViewHolder(val view: View): RecyclerView.ViewHolder(view) {
-    val userLoginTextView: TextView? = view.findViewById<TextView>(R.id.userLoginTextView)
-    val userIconImageView: ImageView? = view.findViewById<ImageView>(R.id.userIconImageView)
-    val countOfFollowersTextView: TextView? = view.findViewById<TextView>(R.id.countOfFollowersTextView)
-    val countOfRepoTextView: TextView? = view.findViewById<TextView>(R.id.countOfRepoTextView)
+    val userLoginTextView: TextView? = view.findViewById(R.id.userLoginTextView)
+    val userIconImageView: ImageView? = view.findViewById(R.id.userIconImageView)
+    val countOfFollowersTextView: TextView? = view.findViewById(R.id.countOfFollowersTextView)
+    val countOfRepoTextView: TextView? = view.findViewById(R.id.countOfRepoTextView)
 }
