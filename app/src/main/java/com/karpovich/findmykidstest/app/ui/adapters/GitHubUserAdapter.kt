@@ -7,21 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.karpovich.findmykidstest.R
-import com.karpovich.findmykidstest.app.data.network.entities.GitHubItemEntity
+import com.karpovich.findmykidstest.app.data.network.entities.GitHubUserEntity
 import com.karpovich.findmykidstest.app.ui.utilities.GitHubItemDiffCallback
 
-class GitHubItemsAdapter : ListAdapter<GitHubItemEntity, GitHubItemViewHolder>(GitHubItemDiffCallback()) {
+class GitHubUserAdapter : ListAdapter<GitHubUserEntity, GitHubUserViewHolder>(GitHubItemDiffCallback()) {
 
-    var onGitUserClickListener: ((GitHubItemEntity) -> Unit)? = null
+    var onGitUserClickListener: ((GitHubUserEntity) -> Unit)? = null
     var onEndOfListReachedListener: (() -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitHubItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitHubUserViewHolder {
         val layout = R.layout.user_item
         val view = LayoutInflater.from(parent.context).inflate(layout,parent,false)
-        return GitHubItemViewHolder(view)
+        return GitHubUserViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: GitHubItemViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: GitHubUserViewHolder, position: Int) {
         val gitHubUser = getItem(position)
         viewHolder.view.setOnClickListener{
             onGitUserClickListener?.invoke(gitHubUser)
@@ -30,8 +30,11 @@ class GitHubItemsAdapter : ListAdapter<GitHubItemEntity, GitHubItemViewHolder>(G
         val img = gitHubUser.avatarUrl
         Glide.with(viewHolder.itemView)
             .load(img)
+            .placeholder(R.drawable.oriental_cat)
             .into(viewHolder.userIconImageView)
         viewHolder.userIconImageView
+        viewHolder.countOfFollowersTextView.text = gitHubUser.followers.toString()
+        viewHolder.countOfRepoTextView.text = gitHubUser.publicRepos.toString()
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
