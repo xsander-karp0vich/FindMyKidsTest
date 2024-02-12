@@ -3,4 +3,7 @@
     <string name="subs">Подписчики</string>
     <string name="users">Пользователи</string>
     <string name="check_your_internet_connection">Проверьте подключение к интернету</string>
+    <string name="information">Информация</string>
+    <string name="repos">Репозитории:</string>
+    <string name="followers">Подписчики:</string>
 </resources>

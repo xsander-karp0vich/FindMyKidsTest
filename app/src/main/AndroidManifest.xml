@@ -14,7 +14,7 @@
         android:theme="@style/Theme.FindMyKidsTest"
         tools:targetApi="31">
         <activity
-            android:name=".app.ui.activities.GitHubUserDetailsActivity"
+            android:name=".app.ui.activities.UserDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".app.ui.activities.MainActivity"
