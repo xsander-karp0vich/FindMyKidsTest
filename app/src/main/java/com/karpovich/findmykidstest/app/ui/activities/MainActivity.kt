@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun observeViewModel() {
         viewModel.isGitHubUsersLoading.observe(this){
-            setupProgressBar(it)
+            observeGitHubUsersLoading(it)
         }
         viewModel.gitHubUsers.observe(this){
             if (it != null) {
@@ -67,17 +67,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun launchToGitHubUserDetailsActivity(login:String) {
-        val intent = UserDetailsActivity.newIntent(this, login)
-        startActivity(intent)
-    }
-    private fun setupProgressBar(boolean: Boolean) {
-        val progressBar = binding.progressBar
-        if (boolean){
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.INVISIBLE
-            binding.users.visibility = View.VISIBLE
-            binding.usersRecycleView.visibility = View.VISIBLE
+        UserDetailsActivity.newIntent(this, login).also {
+            startActivity(it)
         }
+    }
+    private fun observeGitHubUsersLoading(boolean: Boolean) {
+        if (boolean){
+            hideViewsOnLoading()
+        } else {
+            showViewsAfterLoading()
+        }
+    }
+    private fun hideViewsOnLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.usersRecycleView.visibility = View.INVISIBLE
+        binding.users.visibility = View.INVISIBLE
+    }
+    private fun showViewsAfterLoading() {
+        binding.progressBar.visibility = View.GONE
+        binding.usersRecycleView.visibility = View.VISIBLE
+        binding.users.visibility = View.VISIBLE
+
     }
 }
