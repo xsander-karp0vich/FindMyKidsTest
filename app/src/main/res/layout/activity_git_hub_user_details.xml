@@ -1,23 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.ui.activities.GitHubUserDetailsActivity">
+    android:id="@+id/mainConstraintLayout"
+    android:orientation="vertical"
+    tools:context=".app.ui.activities.UserDetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/userLoginTextView"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="{LOGIN}"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
         <ImageButton
             android:id="@+id/backButtonImageView"
-            android:src="@drawable/icon_24_back"
-             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_24_back" />
 
     </androidx.appcompat.widget.Toolbar>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="20dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/serene_sky_blue">
+
+
+                    <ImageView
+                        android:id="@+id/userAvatarImageView"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/user_icon_bg"
+                        android:clipToOutline="true"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintHeight_percent="0.4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/oriental_cat" />
+
+
+                    <TextView
+                        android:id="@+id/userNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatarImageView"
+                        app:layout_constraintTop_toTopOf="@+id/userAvatarImageView"
+                        tools:text="{NAME}" />
+
+                    <TextView
+                        android:id="@+id/userCompanyTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/stormy_slate_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatarImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
+                        tools:text="{COMPANY}" />
+
+                    <TextView
+                        android:id="@+id/userEmailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/stormy_slate_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatarImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/userCompanyTextView"
+                        tools:text="{EMAIL}" />
+
+                    <TextView
+                        android:id="@+id/userBlogTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/stormy_slate_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatarImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/userEmailTextView"
+                        tools:text="{BLOG}" />
+
+                    <TextView
+                        android:id="@+id/userLocationTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/stormy_slate_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatarImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/userBlogTextView"
+                        tools:text="{LOCATION}" />
+
+                    <TextView
+                        android:id="@+id/infoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:padding="20dp"
+                        android:text="@string/information"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/userLocationTextView" />
+
+                    <TextView
+                        android:id="@+id/userBioTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="2dp"
+                        android:textColor="@color/stormy_slate_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/infoTextView"
+                        tools:text="{BIO}" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/followersTextView"
+                android:padding="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/subs"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/subsUserRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/followersTextView" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:constraint_referenced_ids="cardView,subsUserRecyclerView,followersTextView"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>
