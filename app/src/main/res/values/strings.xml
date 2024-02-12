@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FindMyKidsTest</string>
+    <string name="subs">Подписчики</string>
+    <string name="users">Пользователи</string>
+    <string name="check_your_internet_connection">Проверьте подключение к интернету</string>
+    <string name="information">Информация</string>
+    <string name="repos">Репозитории:</string>
+    <string name="followers">Подписчики:</string>
+    <string name="something_went_wrong">Что-то пошло не так...</string>
 </resources>
