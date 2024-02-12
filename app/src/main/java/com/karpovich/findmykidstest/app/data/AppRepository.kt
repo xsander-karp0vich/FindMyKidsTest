@@ -2,13 +2,12 @@ package com.karpovich.findmykidstest.app.data
 
 import com.karpovich.findmykidstest.app.data.network.api.ApiFactory
 import com.karpovich.findmykidstest.app.data.network.api.ApiService
-import com.karpovich.findmykidstest.app.data.network.entities.GitHubItemEntity
 import com.karpovich.findmykidstest.app.data.network.entities.GitHubUserEntity
 import retrofit2.Response
 
 object AppRepository : ApiService {
     private val api = ApiFactory().apiService
-    override suspend fun getGitHubUsers(perPage:Int): Response<List<GitHubItemEntity>> {
+    override suspend fun getGitHubUsers(perPage:Int): Response<List<GitHubUserEntity>> {
         return api.getGitHubUsers(perPage)
     }
 
@@ -16,7 +15,7 @@ object AppRepository : ApiService {
         return api.getGitHubUser(username)
     }
 
-    override suspend fun getGitHubFollowers(username: String): Response<List<GitHubItemEntity>> {
+    override suspend fun getGitHubFollowers(username: String): Response<List<GitHubUserEntity>> {
         return api.getGitHubFollowers(username)
     }
 }
