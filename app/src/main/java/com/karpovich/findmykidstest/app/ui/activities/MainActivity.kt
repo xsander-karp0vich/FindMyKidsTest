@@ -35,13 +35,30 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,viewModelFactory)[MainViewModel::class.java]
     }
     private fun observeViewModel() {
-        viewModel.isGitHubUsersLoading.observe(this){
-            observeGitHubUsersLoading(it)
+        observeGitHubUserLoading()
+        observeGitHubUsers()
+        observeErrorMessage()
+    }
+    private fun observeErrorMessage() {
+        viewModel.errorMessage.observe(this){
+            if (it){
+                hideViewsOnLoading()
+                binding.progressBar.visibility = View.INVISIBLE
+                binding.errorMessageTextView.visibility = View.VISIBLE
+                binding.users.visibility = View.INVISIBLE
+            }
         }
+    }
+    private fun observeGitHubUsers() {
         viewModel.gitHubUsers.observe(this){
             if (it != null) {
                 gitHubUserAdapter.submitList(it)
             }
+        }
+    }
+    private fun observeGitHubUserLoading() {
+        viewModel.isGitHubUsersLoading.observe(this){
+            observeGitHubUsersLoading(it)
         }
     }
     private fun setupRecycleView() {
@@ -87,6 +104,5 @@ class MainActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.GONE
         binding.usersRecycleView.visibility = View.VISIBLE
         binding.users.visibility = View.VISIBLE
-
     }
 }

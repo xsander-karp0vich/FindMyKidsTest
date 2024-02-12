@@ -51,14 +51,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/errorMessageTextView"
         android:visibility="gone"
-        android:id="@+id/checkYourInternetConnectionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="@string/check_your_internet_connection"
+        android:text="@string/something_went_wrong"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,4 +6,5 @@
     <string name="information">Информация</string>
     <string name="repos">Репозитории:</string>
     <string name="followers">Подписчики:</string>
+    <string name="something_went_wrong">Что-то пошло не так...</string>
 </resources>

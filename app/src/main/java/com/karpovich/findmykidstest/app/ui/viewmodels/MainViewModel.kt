@@ -20,6 +20,10 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
     val gitHubUsers: LiveData<List<GitHubUserEntity>?>
         get() = _gitHubUsers
 
+    private val _errorMessage = MutableLiveData<Boolean>()
+    val errorMessage: LiveData<Boolean>
+        get() = _errorMessage
+
     init {
         loadGitHubUsers()
     }
@@ -67,11 +71,10 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
     }
 
     private fun handleFailedResponse(response: Response<List<GitHubUserEntity>>) {
-        Log.e("MainViewModel", "Failed to load GitHub users: ${response.message()}")
-        Log.e("MainViewModel", "Failed to load GitHub users: ${response.code()}")
+        _errorMessage.postValue(true)
     }
 
     private fun handleError(e: Exception) {
-        Log.e("MainViewModel", "Error loading GitHub users", e)
+        _errorMessage.postValue(true)
     }
 }
