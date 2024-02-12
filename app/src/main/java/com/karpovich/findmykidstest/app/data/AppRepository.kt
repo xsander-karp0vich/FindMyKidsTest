@@ -15,7 +15,7 @@ object AppRepository : ApiService {
         return api.getGitHubUser(username)
     }
 
-    override suspend fun getGitHubFollowers(username: String): Response<List<GitHubUserEntity>> {
-        return api.getGitHubFollowers(username)
+    override suspend fun getGitHubFollowers(username: String, perPage: Int): Response<List<GitHubUserEntity>> {
+        return api.getGitHubFollowers(username, perPage)
     }
 }
