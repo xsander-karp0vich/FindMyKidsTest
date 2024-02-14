@@ -32,7 +32,7 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
         _isGitHubUsersLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = appRepository.getGitHubUsers(10)
+                val response = appRepository.getGitHubUsers(10,1)
 
                 if (response.isSuccessful) {
                     val users = response.body()
