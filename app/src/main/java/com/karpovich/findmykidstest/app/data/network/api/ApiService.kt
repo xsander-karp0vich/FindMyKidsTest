@@ -16,5 +16,9 @@ interface ApiService {
     @GET("users/{username}")
     suspend fun getGitHubUser(@Path("username") username: String): Response<GitHubUserEntity>
     @GET("users/{username}/followers")
-    suspend fun getGitHubFollowers(@Path("username") username: String, @Query("per_page")perPage: Int): Response<List<GitHubUserEntity>>
+    suspend fun getGitHubFollowers(
+        @Path("username") username: String,
+        @Query("per_page")perPage: Int,
+        @Query("since") since: Int
+    ): Response<List<GitHubUserEntity>>
 }
