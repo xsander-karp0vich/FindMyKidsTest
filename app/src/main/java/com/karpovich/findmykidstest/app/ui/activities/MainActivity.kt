@@ -79,9 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun setupOnEndOfListReachedListener() {
-        gitHubUserAdapter.onEndOfListReachedListener = {
-            //вспомнил что пагинация не нужна и обрадовался
-        }
+        gitHubUserAdapter.onEndReachedListener = {}
     }
     private fun launchToGitHubUserDetailsActivity(login:String) {
         UserDetailsActivity.newIntent(this, login).also {
