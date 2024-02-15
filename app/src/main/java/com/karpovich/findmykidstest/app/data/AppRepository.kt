@@ -23,8 +23,7 @@ object AppRepository : ApiService {
     override suspend fun getGitHubFollowers(
         @Path(value = "username") username: String,
         @Query(value = "per_page") perPage: Int,
-        @Query(value = "since") since: Int
     ): Response<List<GitHubUserEntity>> {
-        return api.getGitHubFollowers(username,perPage,since)
+        return api.getGitHubFollowers(username,perPage)
     }
 }
