@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     private fun observeErrorMessage() {
         viewModel.errorMessage.observe(this){
             if (it){
-                hideViewsOnLoading()
                 binding.progressBar.visibility = View.INVISIBLE
                 binding.errorMessageTextView.visibility = View.VISIBLE
                 binding.users.visibility = View.INVISIBLE
@@ -79,8 +78,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun setupOnEndOfListReachedListener() {
-        gitHubUserAdapter.onEndOfListReachedListener = {
-            //вспомнил что пагинация не нужна и обрадовался
+        gitHubUserAdapter.onEndReachedListener = {
+            viewModel.loadGitHubUsers()
         }
     }
     private fun launchToGitHubUserDetailsActivity(login:String) {
@@ -90,19 +89,9 @@ class MainActivity : AppCompatActivity() {
     }
     private fun observeGitHubUsersLoading(boolean: Boolean) {
         if (boolean){
-            hideViewsOnLoading()
+            binding.progressBar.visibility = View.VISIBLE
         } else {
-            showViewsAfterLoading()
+            binding.progressBar.visibility = View.GONE
         }
-    }
-    private fun hideViewsOnLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-        binding.usersRecycleView.visibility = View.INVISIBLE
-        binding.users.visibility = View.INVISIBLE
-    }
-    private fun showViewsAfterLoading() {
-        binding.progressBar.visibility = View.GONE
-        binding.usersRecycleView.visibility = View.VISIBLE
-        binding.users.visibility = View.VISIBLE
     }
 }
