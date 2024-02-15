@@ -23,24 +23,36 @@ class MainViewModel(private val appRepository: AppRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<Boolean>()
     val errorMessage: LiveData<Boolean>
         get() = _errorMessage
+    private var since = 0
+    private val allGitHubUsers = mutableListOf<GitHubUserEntity>()
 
     init {
         loadGitHubUsers()
     }
 
-    private fun loadGitHubUsers() {
+    fun loadGitHubUsers() {
         _isGitHubUsersLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = appRepository.getGitHubUsers(10)
+                val response = appRepository.getGitHubUsers(10, since)
 
                 if (response.isSuccessful) {
                     val users = response.body()
                     users?.let {
                         for (user in it) {
-                            updateUserDetails(user)
+
+                            val existingUser = allGitHubUsers.find { existingUser -> existingUser.id == user.id }
+
+                            if (existingUser == null) {
+                                updateUserDetails(user)
+                                allGitHubUsers.add(user)
+                            } else {
+                                updateUserDetails(existingUser)
+                            }
                         }
-                        _gitHubUsers.postValue(users)
+
+                        _gitHubUsers.postValue(allGitHubUsers.toList())
+                        since += it.size
                     } ?: Log.e("MainViewModel", "Empty user list received")
                 } else {
                     handleFailedResponse(response)

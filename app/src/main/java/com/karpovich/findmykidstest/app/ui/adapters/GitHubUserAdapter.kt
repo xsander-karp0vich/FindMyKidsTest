@@ -13,7 +13,7 @@ import com.karpovich.findmykidstest.app.ui.utilities.GitHubUserDiffCallback
 class GitHubUserAdapter : ListAdapter<GitHubUserEntity, GitHubUserViewHolder>(GitHubUserDiffCallback()) {
 
     var onGitUserClickListener: ((GitHubUserEntity) -> Unit)? = null
-    var onEndOfListReachedListener: (() -> Unit)? = null
+    var onEndReachedListener: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitHubUserViewHolder {
         val layout = R.layout.user_item
@@ -35,22 +35,12 @@ class GitHubUserAdapter : ListAdapter<GitHubUserEntity, GitHubUserViewHolder>(Gi
         viewHolder.userIconImageView
         viewHolder.countOfFollowersTextView.text = gitHubUser.followers.toString()
         viewHolder.countOfRepoTextView.text = gitHubUser.publicRepos.toString()
+
+        if (position == itemCount - ONE) {
+            onEndReachedListener?.invoke()
+        }
     }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as GridLayoutManager
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    onEndOfListReachedListener?.invoke()
-                }
-            }
-        })
+    private companion object {
+        private const val ONE = 1
     }
 }
