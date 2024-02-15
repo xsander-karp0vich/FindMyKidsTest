@@ -2,9 +2,9 @@ package com.karpovich.findmykidstest.app.ui.activities
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
@@ -32,7 +32,7 @@ class UserDetailsActivity : AppCompatActivity() {
         setupViewModel(login)
         setClickListeners()
         observeViewModel()
-        setupRecycleView()
+        setupRecycleView(login)
         setupScrollViewListener(login)
     }
     private fun setupViewModel(login: String) {
@@ -40,12 +40,13 @@ class UserDetailsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[UserDetailsViewModel::class.java]
     }
     private fun observeViewModel() {
-        observeGitHubUserLoading()
+        observeGitHubUserDetailsLoading()
+        observeGitHubUserFollowersLoading()
         observeGitHubUserDetails()
         observeGitHubFollowers()
         observeErrorMessage()
     }
-    private fun setupRecycleView() {
+    private fun setupRecycleView(login: String) {
         val rvUserFollowers = binding.subsUserRecyclerView
         with(rvUserFollowers){
             gitHubUserAdapter = GitHubUserAdapter()
@@ -54,6 +55,7 @@ class UserDetailsActivity : AppCompatActivity() {
             val layoutManager = GridLayoutManager(this@UserDetailsActivity, spanCount)
             rvUserFollowers.layoutManager = layoutManager
         }
+        onNestedScrollViewScrollEndReached(login)
     }
     private fun parseIntentLogin(intent: Intent): String {
         val login = intent.getStringExtra(EXTRA_LOGIN).toString()
@@ -80,12 +82,21 @@ class UserDetailsActivity : AppCompatActivity() {
             }
         }
     }
-    private fun observeGitHubUserLoading() {
-        viewModel.isGitHubUserLoading.observe(this) { isLoading ->
-            if (isLoading) {
-                hideViewsOnLoading()
+    private fun observeGitHubUserDetailsLoading() {
+        viewModel.isGitHubUserDetailsLoading.observe(this) {
+            if (it) {
+                hideViewsOnUserDetailsLoading()
             } else {
-                showViewsAfterLoading()
+                showViewsAfterUserDetailsLoading()
+            }
+        }
+    }
+    private fun observeGitHubUserFollowersLoading() {
+        viewModel.isGitHubUserFollowersLoading.observe(this) {
+            if (it){
+                binding.progressBarUserFollowers.visibility = View.VISIBLE
+            } else {
+                binding.progressBarUserFollowers.visibility = View.GONE
             }
         }
     }
@@ -99,7 +110,6 @@ class UserDetailsActivity : AppCompatActivity() {
     private fun observeErrorMessage() {
         viewModel.errorMessage.observe(this){
             if (it){
-                hideViewsOnLoading()
                 binding.progressBar.visibility = View.INVISIBLE
                 binding.errorMessageTextView.visibility = View.VISIBLE
             }
@@ -118,16 +128,22 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideViewsOnLoading() {
+    private fun hideViewsOnUserDetailsLoading() {
         binding.progressBar.visibility = View.VISIBLE
-        binding.groupView.visibility = View.INVISIBLE
-        binding.userLoginTextView.visibility = View.INVISIBLE
+        binding.cardView.visibility = View.INVISIBLE
     }
 
-    private fun showViewsAfterLoading() {
-        binding.progressBar.visibility = View.INVISIBLE
-        binding.groupView.visibility = View.VISIBLE
-        binding.userLoginTextView.visibility = View.VISIBLE
+    private fun showViewsAfterUserDetailsLoading() {
+        binding.cardView.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+    }
+    private fun onNestedScrollViewScrollEndReached(login: String) {
+        val nestedScrollView = binding.nestedScrollView
+        nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY == nestedScrollView.getChildAt(0).measuredHeight - nestedScrollView.measuredHeight) {
+                viewModel.loadGitHubUserFollowers(login)
+            }
+        }
     }
     companion object {
 
